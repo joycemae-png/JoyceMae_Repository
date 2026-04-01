@@ -1,0 +1,74 @@
+{% extends 'joyce_app/base.html' %}
+{% load static %}
+
+{% block title %}Education — {{ profile.name }}{% endblock %}
+{% block meta_desc %}Academic background and educational history of {{ profile.name }}.{% endblock %}
+
+{% block content %}
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <p class="section-label">Academic Background</p>
+  <h1 class="page-header-title">Education</h1>
+  <p class="page-header-sub">The schools, degrees, and programs that shaped who I am</p>
+</div>
+
+<!-- EDUCATION TIMELINE -->
+<div class="section">
+
+  {% if education_list %}
+  <div class="education-timeline">
+
+    {% for edu in education_list %}
+    <article class="edu-item">
+
+      <!-- Year range badge -->
+      <p class="edu-year">{{ edu.get_year_range }}</p>
+
+      <!-- Degree / program -->
+      <h2 class="edu-degree">{{ edu.degree }}</h2>
+
+      <!-- School name -->
+      <p class="edu-school">{{ edu.school }}</p>
+
+      <!-- Field of study -->
+      {% if edu.field_of_study %}
+      <p class="edu-field">{{ edu.field_of_study }}</p>
+      {% endif %}
+
+      <!-- Description / notes -->
+      {% if edu.description %}
+      <p class="edu-desc">{{ edu.description }}</p>
+      {% endif %}
+
+    </article>
+    {% endfor %}
+
+  </div>
+
+  {% else %}
+  <!-- Empty state -->
+  <div style="text-align: center; padding: 6rem 0; color: var(--text-muted);">
+    <svg width="56" height="56" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24" style="margin: 0 auto 1.5rem; opacity: 0.3;">
+      <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+      <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+    </svg>
+    <p style="font-size: 1.1rem; margin-bottom: 0.5rem;">No education entries added yet.</p>
+    <p style="font-size: 0.85rem;">Add them through the Django admin panel.</p>
+  </div>
+  {% endif %}
+
+  <!-- Call-to-action row -->
+  <div style="margin-top: 4rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+    <a href="{% url 'skills' %}" class="btn-primary">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+      </svg>
+      View My Skills
+    </a>
+    <a href="{% url 'projects' %}" class="btn-outline">See My Projects</a>
+  </div>
+
+</div>
+
+{% endblock %}

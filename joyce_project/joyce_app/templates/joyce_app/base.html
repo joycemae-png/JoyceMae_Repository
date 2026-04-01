@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}{% if profile %}{{ profile.name }}{% else %}My Portfolio{% endif %}{% endblock %} | Portfolio</title>
+  <meta name="description" content="{% block meta_desc %}Personal portfolio website{% endblock %}" />
+  <link rel="stylesheet" href="{% static '/css/style.css' %}" />
+  <script src="{% static 'js/main.js' %}" defer></script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💼</text></svg>" />
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <a href="{% url 'home' %}" class="nav-logo">
+      {% if profile %}{{ profile.name|slice:":1" }}<span>Mae</span>{% else %}P<span>.</span>{% endif %}
+    </a>
+
+    <ul class="nav-links" id="nav-links">
+      <li><a href="{% url 'home' %}"       {% if active == 'home'      %}class="active"{% endif %}>Home</a></li>
+      <li><a href="{% url 'about' %}"      {% if active == 'about'     %}class="active"{% endif %}>About</a></li>
+      <li><a href="{% url 'skills' %}"     {% if active == 'skills'    %}class="active"{% endif %}>Skills</a></li>
+      <li><a href="{% url 'projects' %}"   {% if active == 'projects'  %}class="active"{% endif %}>Projects</a></li>
+      <li><a href="{% url 'education' %}"  {% if active == 'education' %}class="active"{% endif %}>Education</a></li>
+      <li><a href="{% url 'contact' %}"    {% if active == 'contact'   %}class="active"{% endif %}>Contact</a></li>
+    </ul>
+
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-links">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- PAGE CONTENT -->
+  <main class="page-content">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>
+      &copy; {% now "Y" %}
+      {% if profile %}<a href="{% url 'home' %}">{{ profile.name }}</a>{% else %}My Portfolio{% endif %}
+      &mdash; Built with <a href="https://www.djangoproject.com/" target="_blank" rel="noopener">Django</a>
+      &amp; deployed on <a href="https://www.pythonanywhere.com/" target="_blank" rel="noopener">PythonAnywhere</a>
+    </p>
+  </footer>
+
+  <script src="{% static 'portfolio/js/main.js' %}"></script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

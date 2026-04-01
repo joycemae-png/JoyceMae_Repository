@@ -1,0 +1,43 @@
+{% extends 'joyce_app/base.html' %}
+
+{% block title %}Skills — {{ profile.name }}{% endblock %}
+{% block meta_desc %}Technical skills and proficiency levels of {{ profile.name }}.{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+  <p class="section-label">What I Know</p>
+  <h1 class="page-header-title">Skills &amp; Expertise</h1>
+  <p class="page-header-sub">My technical toolkit — always growing</p>
+</div>
+
+<div class="section">
+  {% if skills_by_category %}
+    {% for category, skill_list in skills_by_category.items %}
+    <div class="skills-category">
+      <h2 class="category-heading">{{ category }}</h2>
+      <div class="skills-grid">
+        {% for skill in skill_list %}
+        <div class="skill-card">
+          <div class="skill-info">
+            <span class="skill-name">{{ skill.name }}</span>
+            <span class="skill-pct">{{ skill.proficiency }}%</span>
+          </div>
+          <div class="skill-bar">
+            <div class="skill-fill" data-pct="{{ skill.proficiency|stringformat:'s'|cut:'%' }}"></div>
+          </div>
+        </div>
+        
+        {% endfor %}
+      </div>
+    </div>
+    {% endfor %}
+  {% else %}
+    <p style="color: var(--text-muted); text-align:center; padding: 4rem 0;">
+      No skills added yet. Add them via the Django admin panel.
+    </p>
+  {% endif %}
+</div>
+
+{% endblock %}
+ 
